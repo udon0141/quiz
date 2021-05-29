@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>クイズ大会</title>
+</head>
+<body>
+  <h1>5th発売記念クイズ大会vol.1</h1>
+
+  <br><br><br>
+
+  <h2 id="count"></h2>
+  <P id="text">
+    ルールは固定ツイートにしてあるので、確認できていない方は1度目を通してください！<br>
+    結構難しいかもしれませんが、頑張ってください！
+  </P>
+
+  <p id="answer"></p>
+
+
+  <br><br><br>
+  
+  <div class="btn">
+    <button onclick="nextQuestion()">次の問題へ</button>
+  </div>
+
+  <br>
+
+  <div class="btn">
+    <button onclick="showAnswer()">解答表示</button>
+  </div>
+  
+  
+  <style>
+    body {
+      background-color: lightskyblue;
+    }
+
+    h1 {
+      font-size: 65px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-left: 50px;
+      font-size: 60px;
+    }
+
+    #text {
+      font-size: 50px;
+      margin-left: 50px;
+      margin-right: 50px;
+    }
+
+    #answer {
+      margin-left: 50px;
+      font-size: 50px;
+      color: red;
+    }
+
+    .btn {
+      text-align: center;
+    }
+
+    button {
+      width: 100px;
+      height: 50px;
+      cursor: ß;
+    }
+  </style>
+
+  <script>
+
+    var question = [
+      ["「Myfans」の歌詞で、「私」を口説くために男性がおこなったことは何？", "目を見つめながら囁く"],
+
+      ["「この夏をジャムにしよう」の歌詞で、思い出をジャムとして保存するためのガラス瓶は何色をしている？", "涙色"],
+
+      ["「どうして雨だと言ったんだろう？」の歌詞で、気象予報士は「あの日」の天気について何と言った？", "今日は夜空の星がいつもよりキレイ"],
+
+      ["「アザトカワイイ」の歌詞で、主人公は「君」のどんなことにまでキュンとしている？", "下唇を噛む癖"],
+
+      ["「ナゼー」の歌詞で、答えがあるのは「自然の摂理」の中ですが、ヒントがあるのは何の中？", "永遠の宇宙"],
+
+      ["「ソンナコトナイヨ」の歌詞で、「君」がママに言われた言葉は何？", "そのうちまたすぐ伸びてくるでしょ"],
+
+      ["「青春の馬」の歌詞で、乱れた呼吸は何と例えられている？", "情熱の証"],
+
+      ["「キツネ」の歌詞で、「私」はどのくらいの回数恋をしている？", "星の数ほど"],
+
+      ["「ドレミソラシド」の歌詞の中に、「ファ」は何回登場する？", "3回"],
+
+      ["「ホントの時間」の歌詞で、頭上の空を見上げると何がどうなっていた？", "星がパラパラって輝いた"],
+
+      ["「こんなに好きになっちゃっていいの？」の歌詞で、「私」がいつも気に掛かっていることは何？", "今の私はどう思われているか"],
+
+      ["「優しさが邪魔をする」の歌詞で、「君」はキリマンジャロのコーヒーのどこが好き？", "酸味"],
+
+      ["「Dash&Rush」の歌詞で、オーディションの会場の目印は何？", "青いテント"],
+
+      ["「キュン」の歌詞で、好きというのは何に例えられている？", "反射神経"],
+
+      ["「JOYFUL LOVE」の歌詞で、「君」が微笑むとどのような温かい気持ちになれる？", "木漏れ日"],
+
+      ["「ときめき草」の歌詞で、何かの意味があると主人公が感じたことは何？", "どうだっていい日常のヒトコマ"],
+
+      ["「君に話しておきたいこと」の歌詞で、「君」がどうしたの？と理由を聞きたがったのはなぜ？", "急に思いもよらないことを言い出したようだから"],
+
+      ["「ハッピーオーラ」の歌詞で、「僕」が願ったことは「世界中が幸せになってほしい」ですが、祈ったことは何？", "地球上の争いがなくなるように"],
+
+      ["「期待していない自分」の歌詞で、大人たちが教訓として言っていることは何？", "慎重に生きろ"],
+
+      ["「ひらがなで恋したい」の歌詞で、男の子側がずっと言えずにいる一言は何？", "じゃあまた"],
+
+      ["「NO WAR in the future」の歌詞では、世界の人とわかり合うためにさまざまなことを行なっていますが、最後にすることは何？", "抱きしめ合う"],
+
+      ["「誰よりも高く跳べ！」の歌詞で、太陽が照らしているものは何？", "希望の翼"],
+
+      ["「ひらがなけやき」の歌詞で、「私」が転校してきたのはいつ？", "秋が始まる頃"],
+
+      ["「僕たちは付き合っている」の歌詞で、「僕」が付き合っている「君」は「あいつ」のいつ頃の彼女？", "2年前"],
+
+      ["「イマニミテイロ」の歌詞で「僕」が言ってみたい一言は何？", "サマアミロ"],
+
+      ["「See Through」の歌詞で、「答え」はいつもどこにある？", "未来の向こう"],
+
+      ["「一番好きだとみんなに言っていた小説のタイトルが思い出せない」の歌詞で、タイトルがなかなか出てこない理由は何だと考えている？", "そんな好きじゃないから"],
+
+      ["「耳に落ちる涙」の歌詞で、さっきから動かないものは何？", "デジタル時計"],
+
+      ["「ママのドレス」の歌詞で、「ママ」が「パパ」と恋をしたのはいつ？", "星降る夜のダンスパーティー"],
+
+      ["「ただがむしゃらに」の歌詞で、「大人たち」は楽をするためにどうすればいいと考えている？", "誰かに地図をもらう"],
+
+      ["「未熟な怒り」の歌詞で、「僕たち」は疑いながら何をしていた？", "太陽を待っていた"],
+
+      ["「約束の卵」の歌詞で、小高い丘の上で叫びたいと思っていることは何？", "ここまで来たぞ"],
+
+      ["「半分の記憶」の歌詞で、「愛」は感情の忘れ物ですが、「キス」はなんと例えられている？", "情熱の探しもの"],
+
+      ["「沈黙した恋人よ」の歌詞で、「君」が好きだと言っていたものは何？", "風切るバイクのエンジンの振動"],
+
+      ["「永遠の白線」の歌詞で、伸ばした手を下ろそうとするのはどのあたり？", "限界よりももっと手前"]
+    ];
+
+    function randomNum(num) {
+      let rand = Math.floor(Math.random() * num);
+      return rand;
+    }
+
+    var count = 0;
+    var num = 0;
+    var sentence
+    var timer;
+    var rand;
+
+    function oneWord() {
+      if(num < sentence.length) {
+        let base = document.getElementById("text").innerHTML;
+        document.getElementById("text").innerHTML = base + sentence.charAt(num);
+        num += 1;
+      }
+      else {
+        num = 0;
+        clearInterval(timer);
+      }
+    }
+
+    function nextQuestion() {
+      document.getElementById("count").innerHTML = "";
+      document.getElementById("text").innerHTML = "";
+      document.getElementById("answer").innerHTML = "";
+
+      count += 1;
+      document.getElementById("count").innerHTML = "第" +  count + "問";
+      rand = randomNum(question.length);
+
+      sentence = question[rand][0];
+
+      timer = setInterval(oneWord, 10);
+
+      question.splice(rand, 1);
+    }
+
+    function showAnswer() {
+      document.getElementById("answer").innerHTML = "A." + question[rand][1];
+    }
+  </script>
+
+</body>
+</html>
